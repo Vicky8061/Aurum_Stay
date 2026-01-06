@@ -61,8 +61,8 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 // Logo
                 Container(
-                  height: 90,
-                  width: 90,
+                  height: 130,
+                  width: 130,
                   decoration: BoxDecoration(
                     color: const Color(0xFFC9A24D),
                     borderRadius: BorderRadius.circular(22),
@@ -74,11 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ],
                   ),
-                  child: const Icon(
-                    Icons.hotel_rounded,
-                    color: Colors.white,
-                    size: 48,
-                  ),
+                  child: Image.asset("assets/images/logo.png", width: 115),
                 ),
 
                 const SizedBox(height: 28),
@@ -116,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // Tagline
                 const Text(
-                  "Luxury stays, timeless comfort",
+                  "Where Luxury Feels Like Home",
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 14,

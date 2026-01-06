@@ -51,11 +51,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      Icons.person_add_alt_1_rounded,
-                      color: Color(0xFFFFC107),
-                      size: 55,
-                    ),
+                  Image.asset("assets/images/logo.png",width: 90,color: Color(0xFFFFC107),),
+
                     const SizedBox(height: 16),
 
                     const Text(
