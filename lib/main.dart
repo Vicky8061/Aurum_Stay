@@ -1,4 +1,5 @@
 import 'package:aurum_stay/View/splash_screen.dart';
+import 'package:aurum_stay/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,6 +11,6 @@ class AurumStay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen());
   }
 }
