@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:aurum_stay/pages/signup_page.dart';
+import 'package:aurum_stay/View/signup_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -50,11 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      Icons.home_rounded,
-                      color: Color(0xFFFFC107),
-                      size: 55,
-                    ),
+                    Image.asset("assets/images/logo.png",width: 90,color: Color(0xFFFFC107),),
                     const SizedBox(height: 16),
 
                     const Text(

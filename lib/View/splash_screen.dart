@@ -1,3 +1,4 @@
+import 'package:aurum_stay/View/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 4), () {
-      // Navigate to Onboarding / Home
+      Navigator.push(context, MaterialPageRoute(builder: (_)=>LoginScreen()));
     });
   }
 
@@ -60,8 +61,8 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 // Logo
                 Container(
-                  height: 90,
-                  width: 90,
+                  height: 130,
+                  width: 130,
                   decoration: BoxDecoration(
                     color: const Color(0xFFC9A24D),
                     borderRadius: BorderRadius.circular(22),
@@ -73,11 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ],
                   ),
-                  child: const Icon(
-                    Icons.hotel_rounded,
-                    color: Colors.white,
-                    size: 48,
-                  ),
+                  child: Image.asset("assets/images/logo.png",width: 115,)
                 ),
 
                 const SizedBox(height: 28),
@@ -115,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // Tagline
                 const Text(
-                  "Luxury stays, timeless comfort",
+                  "Where Luxury Feels Like Home",
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 14,
