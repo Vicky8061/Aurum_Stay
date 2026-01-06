@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:aurum_stay/pages/signup_page.dart';
+import 'package:aurum_stay/View/signup_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,10 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF0F172A),
-              Color(0xFF020617),
-            ],
+            colors: [Color(0xFF0F172A), Color(0xFF020617)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),

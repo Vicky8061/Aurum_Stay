@@ -1,3 +1,4 @@
+import 'package:aurum_stay/View/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 4), () {
-      // Navigate to Onboarding / Home
+      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
     });
   }
 
