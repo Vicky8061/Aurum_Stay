@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:aurum_stay/View/home_screen.dart';
+import 'package:aurum_stay/View/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:aurum_stay/View/signup_page.dart';
 
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (_) => HomeScreen()),
+                            MaterialPageRoute(builder: (_) => MainScreen()),
                           );
                         },
                         child: const Text(

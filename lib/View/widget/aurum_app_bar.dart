@@ -31,10 +31,13 @@ class AurumAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: const [
+      actions: [
         Padding(
           padding: EdgeInsets.only(right: 12),
-          child: Icon(Icons.notifications_outlined, color: AppColors.gold),
+          child: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_outlined, color: AppColors.gold),
+          ),
         ),
       ],
     );
