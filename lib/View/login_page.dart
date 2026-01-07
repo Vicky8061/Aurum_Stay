@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aurum_stay/View/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:aurum_stay/View/signup_page.dart';
 
@@ -47,7 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset("assets/images/logo.png",width: 90,color: Color(0xFFFFC107),),
+                    Image.asset(
+                      "assets/images/logo.png",
+                      width: 90,
+                      color: Color(0xFFFFC107),
+                    ),
                     const SizedBox(height: 16),
 
                     const Text(
@@ -91,7 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           elevation: 8,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (_) => HomeScreen()),
+                          );
+                        },
                         child: const Text(
                           "LOGIN",
                           style: TextStyle(
