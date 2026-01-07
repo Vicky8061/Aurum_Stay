@@ -13,7 +13,7 @@ class DestinationCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(22),
       child: Stack(
         children: [
-          Image.asset(image, width: 180, fit: BoxFit.cover),
+          Image.asset(image, width: 180, height: 140, fit: BoxFit.cover),
           Container(
             width: 180,
             decoration: BoxDecoration(
