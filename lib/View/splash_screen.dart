@@ -1,51 +1,15 @@
-import 'package:aurum_stay/View/login_page.dart';
+import 'package:aurum_stay/controller/splashcontroller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _fadeAnimation;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    );
-
-    _fadeAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
-
-    _scaleAnimation = Tween<double>(
-      begin: 0.85,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
-
-    _controller.forward();
-
-    Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => LoginScreen()),
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SplashController());
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -56,13 +20,13 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         ),
         child: FadeTransition(
-          opacity: _fadeAnimation,
+          opacity: controller.fadeAnimation,
           child: ScaleTransition(
-            scale: _scaleAnimation,
+            scale: controller.scaleAnimation,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo
+                /// LOGO
                 Container(
                   height: 130,
                   width: 130,
@@ -82,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 const SizedBox(height: 28),
 
-                // App Name with Gold Shimmer
+                /// APP NAME
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -94,33 +58,22 @@ class _SplashScreenState extends State<SplashScreen>
                         style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.w700,
-                          letterSpacing: 1.3,
                         ),
                       ),
                     ),
                     const SizedBox(width: 6),
                     const Text(
                       "Stay",
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                        letterSpacing: 1.3,
-                      ),
+                      style: TextStyle(fontSize: 36, color: Colors.white),
                     ),
                   ],
                 ),
 
                 const SizedBox(height: 14),
 
-                // Tagline
                 const Text(
                   "Where Luxury Feels Like Home",
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    letterSpacing: 0.8,
-                  ),
+                  style: TextStyle(color: Colors.white70),
                 ),
               ],
             ),

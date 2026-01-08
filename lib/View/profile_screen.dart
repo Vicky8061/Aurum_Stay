@@ -1,3 +1,6 @@
+import 'package:aurum_stay/View/widget/profile_action_row.dart';
+import 'package:aurum_stay/View/widget/profile_header.dart';
+import 'package:aurum_stay/View/widget/profile_menu_tile.dart';
 import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
 
@@ -6,10 +9,41 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.bg,
-      body: Center(
-        child: Text("Profile", style: TextStyle(color: Colors.white)),
+      appBar: AppBar(
+        backgroundColor: AppColors.bg,
+        elevation: 0,
+        title: const Text(
+          "Profile",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            ProfileHeader(),
+            SizedBox(height: 24),
+            Row(
+              children: [
+                ProfileActionRow(icon: Icons.favorite, label: "WishList"),
+                ProfileActionRow(icon: Icons.calendar_today, label: "Bookings"),
+                ProfileActionRow(icon: Icons.settings, label: "Settings"),
+              ],
+            ),
+            SizedBox(height: 28),
+            ProfileMenuTile(icon: Icons.person_outline, title: "Edit Profile"),
+            ProfileMenuTile(icon: Icons.payment, title: "Payment Methods"),
+            ProfileMenuTile(icon: Icons.location_on, title: "Saved Address"),
+            ProfileMenuTile(icon: Icons.help_outline, title: "Help & Support"),
+            ProfileMenuTile(
+              icon: Icons.logout,
+              title: "Logout",
+              isLogout: true,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,36 +1,21 @@
 import 'dart:ui';
+import 'package:aurum_stay/View/widget/aurum_text_field.dart';
+import 'package:aurum_stay/controller/SignUpController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
-}
-
-class _SignupScreenState extends State<SignupScreen> {
-  final FocusNode nameFocus = FocusNode();
-  final FocusNode emailFocus = FocusNode();
-  final FocusNode passwordFocus = FocusNode();
-
-  @override
-  void dispose() {
-    nameFocus.dispose();
-    emailFocus.dispose();
-    passwordFocus.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignupController());
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF0F172A),
-              Color(0xFF020617),
-            ],
+            colors: [Color(0xFF0F172A), Color(0xFF020617)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -51,7 +36,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                  Image.asset("assets/images/logo.png",width: 90,color: Color(0xFFFFC107),),
+                    Image.asset(
+                      "assets/images/logo.png",
+                      width: 90,
+                      color: const Color(0xFFFFC107),
+                    ),
 
                     const SizedBox(height: 16),
 
@@ -61,7 +50,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        letterSpacing: 1,
                       ),
                     ),
 
@@ -69,40 +57,32 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     const Text(
                       "Start your luxury journey with Aurum Stay",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.white70),
                       textAlign: TextAlign.center,
                     ),
 
                     const SizedBox(height: 28),
 
-                    /// NAME
-                    _buildTextField(
+                    AurumTextField(
                       hint: "Full Name",
                       icon: Icons.person_outline,
-                      focusNode: nameFocus,
-                      obscure: false,
+                      controller: controller.nameController,
                     ),
 
                     const SizedBox(height: 16),
 
-                    /// EMAIL
-                    _buildTextField(
+                    AurumTextField(
                       hint: "Email Address",
                       icon: Icons.email_outlined,
-                      focusNode: emailFocus,
-                      obscure: false,
+                      controller: controller.emailController,
                     ),
 
                     const SizedBox(height: 16),
 
-                    /// PASSWORD
-                    _buildTextField(
+                    AurumTextField(
                       hint: "Password",
                       icon: Icons.lock_outline,
-                      focusNode: passwordFocus,
+                      controller: controller.passwordController,
                       obscure: true,
                     ),
 
@@ -117,14 +97,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18),
                           ),
-                          elevation: 8,
                         ),
-                        onPressed: () {},
+                        onPressed: controller.signup,
                         child: const Text(
                           "SIGN UP",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
                             color: Colors.black,
                           ),
                         ),
@@ -141,9 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: TextStyle(color: Colors.white70),
                         ),
                         TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                          onPressed: controller.goToLogin,
                           child: const Text(
                             "Login",
                             style: TextStyle(
@@ -159,31 +135,6 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required String hint,
-    required IconData icon,
-    required FocusNode focusNode,
-    required bool obscure,
-  }) {
-    return TextField(
-      focusNode: focusNode,
-      obscureText: obscure,
-      style: const TextStyle(color: Colors.white),
-      cursorColor: const Color(0xFFFFC107),
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.white70),
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white54),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide.none,
         ),
       ),
     );

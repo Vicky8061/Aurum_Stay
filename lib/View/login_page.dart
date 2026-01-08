@@ -1,28 +1,16 @@
 import 'dart:ui';
-import 'package:aurum_stay/View/main_screen.dart';
+import 'package:aurum_stay/View/widget/aurum_text_field.dart';
+import 'package:aurum_stay/controller/LoginController.dart';
 import 'package:flutter/material.dart';
-import 'package:aurum_stay/View/signup_page.dart';
+import 'package:get/get.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final FocusNode emailFocus = FocusNode();
-  final FocusNode passwordFocus = FocusNode();
-
-  @override
-  void dispose() {
-    emailFocus.dispose();
-    passwordFocus.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -51,8 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     Image.asset(
                       "assets/images/logo.png",
                       width: 90,
-                      color: Color(0xFFFFC107),
+                      color: const Color(0xFFFFC107),
                     ),
+
                     const SizedBox(height: 16),
 
                     const Text(
@@ -61,25 +50,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        letterSpacing: 1,
                       ),
                     ),
 
                     const SizedBox(height: 30),
 
-                    _buildTextField(
+                    AurumTextField(
                       hint: "Email Address",
                       icon: Icons.email_outlined,
-                      focusNode: emailFocus,
-                      obscure: false,
+                      controller: controller.emailController,
                     ),
 
                     const SizedBox(height: 18),
 
-                    _buildTextField(
+                    AurumTextField(
                       hint: "Password",
                       icon: Icons.lock_outline,
-                      focusNode: passwordFocus,
+                      controller: controller.passwordController,
                       obscure: true,
                     ),
 
@@ -94,19 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18),
                           ),
-                          elevation: 8,
                         ),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (_) => MainScreen()),
-                          );
-                        },
+                        onPressed: controller.login,
                         child: const Text(
                           "LOGIN",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
                             color: Colors.black,
                           ),
                         ),
@@ -115,7 +95,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     const SizedBox(height: 16),
 
-                    /// 🔹 SIGN UP SECTION (ADDED)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -124,14 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: Colors.white70),
                         ),
                         TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignupScreen(),
-                              ),
-                            );
-                          },
+                          onPressed: controller.goToSignup,
                           child: const Text(
                             "Sign up",
                             style: TextStyle(
@@ -142,8 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-
-                    const SizedBox(height: 8),
 
                     TextButton(
                       onPressed: () {},
@@ -157,31 +127,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required String hint,
-    required IconData icon,
-    required FocusNode focusNode,
-    required bool obscure,
-  }) {
-    return TextField(
-      focusNode: focusNode,
-      obscureText: obscure,
-      style: const TextStyle(color: Colors.white),
-      cursorColor: const Color(0xFFFFC107),
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.white70),
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white54),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide.none,
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:aurum_stay/View/details_screen.dart';
 import 'package:aurum_stay/View/widget/aurum_app_bar.dart';
 import 'package:aurum_stay/View/widget/destination_card.dart';
 import 'package:aurum_stay/View/widget/room_type_chip.dart';
@@ -115,17 +116,48 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 16),
 
-            /// Stay cards
+            /// Stay cards with smooth animation
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: villas.length,
               separatorBuilder: (_, __) => const SizedBox(height: 20),
-              itemBuilder: (_, i) => StayCard(
-                title: villas[i]["title"]!,
-                price: villas[i]["price"]!,
-                image: villas[i]["image"]!,
-              ),
+              itemBuilder: (_, i) {
+                final villa = villas[i];
+                return StayCard(
+                  title: villa["title"]!,
+                  price: villa["price"]!,
+                  image: villa["image"]!,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            FadeTransition(
+                              opacity: animation,
+                              child: DetailsPage(villa: villa),
+                            ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                              return ScaleTransition(
+                                scale: Tween<double>(begin: 0.95, end: 1.0)
+                                    .animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeOut,
+                                      ),
+                                    ),
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              );
+                            },
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),

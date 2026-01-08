@@ -25,17 +25,38 @@ class NavItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedContainer(
+            /// ICON ANIMATION
+            AnimatedScale(
+              scale: isSelected ? 1.15 : 1.0,
               duration: const Duration(milliseconds: 200),
-              child: Icon(
-                icon,
-                size: 26,
-                color: isSelected ? AppColors.gold : Colors.white54,
+              curve: Curves.easeOut,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                decoration: BoxDecoration(
+                  boxShadow: isSelected
+                      ? [
+                          BoxShadow(
+                            color: AppColors.gold.withOpacity(0.6),
+                            blurRadius: 12,
+                            spreadRadius: 1,
+                          ),
+                        ]
+                      : [],
+                ),
+                child: Icon(
+                  icon,
+                  size: 26,
+                  color: isSelected ? AppColors.gold : Colors.white54,
+                ),
               ),
             ),
+
             const SizedBox(height: 4),
+
+            /// TEXT ANIMATION
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
               style: TextStyle(
                 fontSize: 12,
                 color: isSelected ? AppColors.gold : Colors.white54,

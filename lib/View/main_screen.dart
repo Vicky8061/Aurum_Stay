@@ -1,38 +1,38 @@
+import 'package:aurum_stay/View/bookings_screen.dart';
+import 'package:aurum_stay/View/home_screen.dart';
+import 'package:aurum_stay/View/profile_screen.dart';
 import 'package:aurum_stay/View/saved_screen.dart';
 import 'package:aurum_stay/View/widget/bottom_nav_bar.dart';
+import 'package:aurum_stay/controller/BottomNavController.dart';
+import 'package:aurum_stay/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import '../../utils/app_colors.dart';
-import 'home_screen.dart';
-import 'bookings_screen.dart';
-import 'profile_screen.dart';
+import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    SavedScreen(),
-    BookingsScreen(),
-    ProfileScreen(),
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    final navController = Get.put(BottomNavController());
+
+    final List<Widget> screens = const [
+      HomeScreen(),
+      SavedScreen(),
+      BookingsScreen(),
+      ProfileScreen(),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.bg,
-      body: _screens[_currentIndex],
-      bottomNavigationBar: _buildBottomNav(),
+
+      body: Obx(() => screens[navController.currentIndex.value]),
+
+      bottomNavigationBar: Obx(() => _buildBottomNav(navController)),
     );
   }
 
-  Widget _buildBottomNav() {
+  Widget _buildBottomNav(BottomNavController controller) {
     return Container(
       height: 70,
       decoration: BoxDecoration(
@@ -45,34 +45,29 @@ class _MainScreenState extends State<MainScreen> {
           NavItem(
             icon: Icons.home_rounded,
             label: "Home",
-            isSelected: _currentIndex == 0,
-            onTap: () => _onTabChange(0),
+            isSelected: controller.currentIndex.value == 0,
+            onTap: () => controller.changeTab(0),
           ),
           NavItem(
             icon: Icons.favorite_rounded,
             label: "Wishlist",
-            isSelected: _currentIndex == 1,
-            onTap: () => _onTabChange(1),
+            isSelected: controller.currentIndex.value == 1,
+            onTap: () => controller.changeTab(1),
           ),
           NavItem(
             icon: Icons.calendar_month_rounded,
             label: "Bookings",
-            isSelected: _currentIndex == 2,
-            onTap: () => _onTabChange(2),
+            isSelected: controller.currentIndex.value == 2,
+            onTap: () => controller.changeTab(2),
           ),
           NavItem(
             icon: Icons.person_rounded,
             label: "Profile",
-            isSelected: _currentIndex == 3,
-            onTap: () => _onTabChange(3),
+            isSelected: controller.currentIndex.value == 3,
+            onTap: () => controller.changeTab(3),
           ),
         ],
       ),
     );
-  }
-
-  void _onTabChange(int index) {
-    if (_currentIndex == index) return;
-    setState(() => _currentIndex = index);
   }
 }
