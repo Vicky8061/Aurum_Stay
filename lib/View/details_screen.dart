@@ -1,10 +1,10 @@
 import 'package:aurum_stay/View/booking_screen.dart';
-import 'package:aurum_stay/View/widget/favorite_heart.dart';
-import 'package:aurum_stay/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import '../../utils/app_colors.dart';
+import '../model/villa_model.dart';
 
 class DetailsPage extends StatelessWidget {
-  final Map<String, String> villa;
+  final VillaModel villa; // <-- change from Map<String,String> to VillaModel
 
   const DetailsPage({super.key, required this.villa});
 
@@ -25,14 +25,13 @@ class DetailsPage extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () => Navigator.pop(context),
                 ),
-                actions: const [FavoriteHeart(), SizedBox(width: 16)],
                 flexibleSpace: FlexibleSpaceBar(
                   background: Hero(
-                    tag: villa["image"]!,
+                    tag: villa.image, // use villa.image
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
-                        Image.asset(villa["image"]!, fit: BoxFit.cover),
+                        Image.asset(villa.image, fit: BoxFit.cover),
                         Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -50,17 +49,14 @@ class DetailsPage extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // Content
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 80),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title & Price
                       Text(
-                        villa["title"]!,
+                        villa.title,
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -69,17 +65,14 @@ class DetailsPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        villa["price"]!,
+                        villa.price,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFFFFC107),
                         ),
                       ),
-
                       const SizedBox(height: 24),
-
-                      // About
                       const Text(
                         "About this stay",
                         style: TextStyle(
@@ -96,8 +89,6 @@ class DetailsPage extends StatelessWidget {
                         style: TextStyle(color: Colors.white70, height: 1.6),
                       ),
                       const SizedBox(height: 24),
-
-                      // Facilities
                       const Text(
                         "Facilities",
                         style: TextStyle(
@@ -119,15 +110,13 @@ class DetailsPage extends StatelessWidget {
                           _FacilityIcon(icon: Icons.ac_unit, label: "AC"),
                         ],
                       ),
-                      const SizedBox(height: 120), // space for fixed button
+                      const SizedBox(height: 120),
                     ],
                   ),
                 ),
               ),
             ],
           ),
-
-          // Fixed Book Now Button
           Positioned(
             bottom: 16,
             left: 20,
@@ -164,7 +153,6 @@ class DetailsPage extends StatelessWidget {
   }
 }
 
-// Facility Icon Widget
 class _FacilityIcon extends StatelessWidget {
   final IconData icon;
   final String label;

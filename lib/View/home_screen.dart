@@ -1,11 +1,13 @@
-import 'package:aurum_stay/View/details_screen.dart';
-import 'package:aurum_stay/View/widget/aurum_app_bar.dart';
-import 'package:aurum_stay/View/widget/destination_card.dart';
-import 'package:aurum_stay/View/widget/room_type_chip.dart';
-import 'package:aurum_stay/View/widget/search_bar.dart';
-import 'package:aurum_stay/View/widget/stay_card.dart';
 import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
+import '../controller/home_controller.dart';
+import '../model/villa_model.dart';
+import '../View/details_screen.dart';
+import '../View/widget/aurum_app_bar.dart';
+import '../View/widget/destination_card.dart';
+import '../View/widget/room_type_chip.dart';
+import '../View/widget/search_bar.dart';
+import '../View/widget/stay_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,49 +17,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final HomeController controller = HomeController();
   final TextEditingController _searchController = TextEditingController();
-
-  /// DATA (Later replace with API)
-  final List<Map<String, String>> destinations = [
-    {"name": "Maldives", "image": "assets/images/maldives.jpg"},
-    {"name": "Dubai", "image": "assets/images/dubai.jpg"},
-    {"name": "Goa", "image": "assets/images/goa.jpg"},
-    {"name": "Bali", "image": "assets/images/bali.webp"},
-  ];
-
-  final List<Map<String, String>> villas = [
-    {
-      "title": "Ocean View Villa",
-      "price": "₹18,000 / night",
-      "image": "assets/images/villa1.jpg",
-    },
-    {
-      "title": "Private Pool Villa",
-      "price": "₹25,000 / night",
-      "image": "assets/images/villa2.jpg",
-    },
-    {
-      "title": "Hilltop Luxury Stay",
-      "price": "₹15,500 / night",
-      "image": "assets/images/villa3.jpg",
-    },
-    {
-      "title": "Royal Heritage Villa",
-      "price": "₹32,000 / night",
-      "image": "assets/images/villa5.jpg",
-    },
-  ];
-
-  final List<String> roomTypes = [
-    "Deluxe",
-    "Suite",
-    "Villa",
-    "Resort",
-    "Budget",
-  ];
 
   @override
   Widget build(BuildContext context) {
+    // Filter villas based on search
+    final List<VillaModel> filteredVillas = controller.searchVillas(
+      _searchController.text.trim(),
+    );
+
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: const AurumAppBar(),
@@ -67,6 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 16),
+
+            /// Search Bar
             SearchBarWidget(
               controller: _searchController,
               onChanged: (_) => setState(() {}),
@@ -82,12 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 140,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemCount: destinations.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 16),
-                itemBuilder: (_, i) => DestinationCard(
-                  name: destinations[i]["name"]!,
-                  image: destinations[i]["image"]!,
-                ),
+                itemCount: controller.destinations.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 16),
+                itemBuilder: (_, i) {
+                  final dest = controller.destinations[i];
+                  return DestinationCard(
+                    name: dest["name"]!,
+                    image: dest["image"]!,
+                  );
+                },
               ),
             ),
 
@@ -98,10 +72,21 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 42,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemCount: roomTypes.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 12),
-                itemBuilder: (_, i) =>
-                    RoomTypeChip(title: roomTypes[i], isSelected: i == 0),
+                itemCount: controller.roomTypes.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                itemBuilder: (_, i) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        controller.selectedRoomTypeIndex = i;
+                      });
+                    },
+                    child: RoomTypeChip(
+                      title: controller.roomTypes[i],
+                      isSelected: i == controller.selectedRoomTypeIndex,
+                    ),
+                  );
+                },
               ),
             ),
 
@@ -116,43 +101,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 16),
 
-            /// Stay cards with smooth animation
+            /// Villa Cards
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: villas.length,
+              itemCount: filteredVillas.length,
               separatorBuilder: (_, __) => const SizedBox(height: 20),
               itemBuilder: (_, i) {
-                final villa = villas[i];
+                final VillaModel villa = filteredVillas[i];
                 return StayCard(
-                  title: villa["title"]!,
-                  price: villa["price"]!,
-                  image: villa["image"]!,
+                  title: villa.title,
+                  price: villa.price,
+                  image: villa.image,
                   onTap: () {
                     Navigator.of(context).push(
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            FadeTransition(
-                              opacity: animation,
-                              child: DetailsPage(villa: villa),
-                            ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                              return ScaleTransition(
-                                scale: Tween<double>(begin: 0.95, end: 1.0)
-                                    .animate(
-                                      CurvedAnimation(
-                                        parent: animation,
-                                        curve: Curves.easeOut,
-                                      ),
-                                    ),
-                                child: FadeTransition(
-                                  opacity: animation,
-                                  child: child,
-                                ),
-                              );
-                            },
+                      MaterialPageRoute(
+                        builder: (_) => DetailsPage(villa: villa),
                       ),
                     );
                   },
