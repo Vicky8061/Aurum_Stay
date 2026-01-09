@@ -1,3 +1,4 @@
+import 'package:aurum_stay/View/booking_screen.dart';
 import 'package:aurum_stay/View/widget/favorite_heart.dart';
 import 'package:aurum_stay/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -133,13 +134,20 @@ class DetailsPage extends StatelessWidget {
             right: 20,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFFC107),
+                backgroundColor: AppColors.goldText,
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BookingScreen(villa: villa),
+                  ),
+                );
+              },
               child: const Text(
                 "Book Now",
                 style: TextStyle(

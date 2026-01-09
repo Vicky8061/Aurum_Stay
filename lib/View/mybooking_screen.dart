@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
 
-class BookingsScreen extends StatelessWidget {
-  const BookingsScreen({super.key});
+class MybookingScreen extends StatelessWidget {
+  const MybookingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

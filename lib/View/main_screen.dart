@@ -1,5 +1,5 @@
-import 'package:aurum_stay/View/bookings_screen.dart';
 import 'package:aurum_stay/View/home_screen.dart';
+import 'package:aurum_stay/View/mybooking_screen.dart';
 import 'package:aurum_stay/View/profile_screen.dart';
 import 'package:aurum_stay/View/saved_screen.dart';
 import 'package:aurum_stay/View/widget/bottom_nav_bar.dart';
@@ -19,7 +19,7 @@ class MainScreen extends StatelessWidget {
     final List<Widget> screens = const [
       HomeScreen(),
       SavedScreen(),
-      BookingsScreen(),
+      MybookingScreen(),
       ProfileScreen(),
     ];
 
