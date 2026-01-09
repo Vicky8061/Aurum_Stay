@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       "title": "Royal Heritage Villa",
       "price": "₹32,000 / night",
-      "image": "assets/images/villa4.webp",
+      "image": "assets/images/villa5.jpg",
     },
   ];
 
