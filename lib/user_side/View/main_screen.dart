@@ -1,8 +1,8 @@
-import 'package:aurum_stay/View/home_screen.dart';
-import 'package:aurum_stay/View/mybooking_screen.dart';
-import 'package:aurum_stay/View/profile_screen.dart';
-import 'package:aurum_stay/View/saved_screen.dart';
-import 'package:aurum_stay/View/widget/bottom_nav_bar.dart';
+import 'package:aurum_stay/user_side/View/home_screen.dart';
+import 'package:aurum_stay/user_side/View/mybooking_screen.dart';
+import 'package:aurum_stay/user_side/View/profile_screen.dart';
+import 'package:aurum_stay/user_side/View/saved_screen.dart';
+import 'package:aurum_stay/user_side/View/widget/bottom_nav_bar.dart';
 import 'package:aurum_stay/controller/BottomNavController.dart';
 import 'package:aurum_stay/utils/app_colors.dart';
 import 'package:flutter/material.dart';

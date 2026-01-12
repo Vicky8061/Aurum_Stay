@@ -1,7 +1,7 @@
+import 'package:aurum_stay/user_side/view/main_screen.dart';
+import 'package:aurum_stay/user_side/view/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../view/main_screen.dart';
-import '../view/signup_page.dart';
 
 class LoginController extends GetxController {
   /// Text Controllers

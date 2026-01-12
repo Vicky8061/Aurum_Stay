@@ -1,13 +1,13 @@
+import 'package:aurum_stay/controller/home_controller.dart';
+import 'package:aurum_stay/model/villa_model.dart';
 import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
-import '../controller/home_controller.dart';
-import '../model/villa_model.dart';
-import '../View/details_screen.dart';
-import '../View/widget/aurum_app_bar.dart';
-import '../View/widget/destination_card.dart';
-import '../View/widget/room_type_chip.dart';
-import '../View/widget/search_bar.dart';
-import '../View/widget/stay_card.dart';
+import 'details_screen.dart';
+import 'widget/aurum_app_bar.dart';
+import 'widget/destination_card.dart';
+import 'widget/room_type_chip.dart';
+import 'widget/search_bar.dart';
+import 'widget/stay_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

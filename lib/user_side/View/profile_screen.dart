@@ -1,8 +1,8 @@
-import 'package:aurum_stay/View/widget/profile_action_row.dart';
-import 'package:aurum_stay/View/widget/profile_header.dart';
-import 'package:aurum_stay/View/widget/profile_menu_tile.dart';
+import 'package:aurum_stay/user_side/View/widget/profile_action_row.dart';
+import 'package:aurum_stay/user_side/View/widget/profile_header.dart';
+import 'package:aurum_stay/user_side/View/widget/profile_menu_tile.dart';
+import 'package:aurum_stay/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import '../../utils/app_colors.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

@@ -1,15 +1,15 @@
 import 'dart:ui';
-import 'package:aurum_stay/View/widget/aurum_text_field.dart';
-import 'package:aurum_stay/controller/LoginController.dart';
+import 'package:aurum_stay/user_side/View/widget/aurum_text_field.dart';
+import 'package:aurum_stay/controller/SignUpController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
+    final controller = Get.put(SignupController());
 
     return Scaffold(
       body: Container(
@@ -45,15 +45,31 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     const Text(
-                      "Welcome to Aurum Stay",
+                      "Create Your Account",
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 26,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
 
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 6),
+
+                    const Text(
+                      "Start your luxury journey with Aurum Stay",
+                      style: TextStyle(fontSize: 14, color: Colors.white70),
+                      textAlign: TextAlign.center,
+                    ),
+
+                    const SizedBox(height: 28),
+
+                    AurumTextField(
+                      hint: "Full Name",
+                      icon: Icons.person_outline,
+                      controller: controller.nameController,
+                    ),
+
+                    const SizedBox(height: 16),
 
                     AurumTextField(
                       hint: "Email Address",
@@ -61,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                       controller: controller.emailController,
                     ),
 
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 16),
 
                     AurumTextField(
                       hint: "Password",
@@ -70,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                       obscure: true,
                     ),
 
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 28),
 
                     SizedBox(
                       width: double.infinity,
@@ -82,9 +98,9 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(18),
                           ),
                         ),
-                        onPressed: controller.login,
+                        onPressed: controller.signup,
                         child: const Text(
-                          "LOGIN",
+                          "SIGN UP",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -93,19 +109,19 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 18),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "Don’t have an account?",
+                          "Already have an account?",
                           style: TextStyle(color: Colors.white70),
                         ),
                         TextButton(
-                          onPressed: controller.goToSignup,
+                          onPressed: controller.goToLogin,
                           child: const Text(
-                            "Sign up",
+                            "Login",
                             style: TextStyle(
                               color: Color(0xFFFFC107),
                               fontWeight: FontWeight.bold,
@@ -113,14 +129,6 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.white70),
-                      ),
                     ),
                   ],
                 ),

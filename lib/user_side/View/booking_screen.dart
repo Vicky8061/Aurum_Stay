@@ -1,11 +1,11 @@
 import 'dart:ui';
+import 'package:aurum_stay/model/villa_model.dart';
+import 'package:aurum_stay/user_side/View/widget/booking_tile.dart';
+import 'package:aurum_stay/user_side/View/widget/counter_button.dart';
+import 'package:aurum_stay/user_side/View/widget/icon_button.dart';
 import 'package:flutter/material.dart';
 import '../../controller/booking_controller.dart';
 import '../../utils/app_colors.dart';
-import '../model/villa_model.dart';
-import 'package:aurum_stay/View/widget/booking_tile.dart';
-import 'package:aurum_stay/View/widget/counter_button.dart';
-import 'package:aurum_stay/View/widget/icon_button.dart';
 
 class BookingScreen extends StatefulWidget {
   final VillaModel villa; //

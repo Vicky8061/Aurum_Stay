@@ -1,4 +1,5 @@
-import 'package:aurum_stay/View/splash_screen.dart';
+import 'package:aurum_stay/admin_side/view/admin_dashboard.dart';
+import 'package:aurum_stay/user_side/View/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

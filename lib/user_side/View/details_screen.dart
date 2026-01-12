@@ -1,7 +1,7 @@
-import 'package:aurum_stay/View/booking_screen.dart';
+import 'package:aurum_stay/model/villa_model.dart';
+import 'package:aurum_stay/user_side/View/booking_screen.dart';
 import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
-import '../model/villa_model.dart';
 
 class DetailsPage extends StatelessWidget {
   final VillaModel villa; // <-- change from Map<String,String> to VillaModel

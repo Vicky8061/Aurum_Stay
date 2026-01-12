@@ -1,6 +1,6 @@
+import 'package:aurum_stay/user_side/view/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../view/login_page.dart';
 
 class SplashController extends GetxController
     with GetSingleTickerProviderStateMixin {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../utils/app_colors.dart';
+import 'package:aurum_stay/utils/app_colors.dart';
 import 'favorite_heart.dart';
 
 class StayCard extends StatelessWidget {
