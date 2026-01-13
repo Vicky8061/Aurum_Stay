@@ -2,7 +2,7 @@ class VillaModel {
   final String id;
   final String title;
   final String image;
-  final String price;
+  final double price;
   final String location;
   final String type;
   final double rating;

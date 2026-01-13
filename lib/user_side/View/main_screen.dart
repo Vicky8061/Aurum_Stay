@@ -19,7 +19,7 @@ class MainScreen extends StatelessWidget {
     final List<Widget> screens = const [
       HomeScreen(),
       SavedScreen(),
-      MybookingScreen(),
+      MyBookingsScreen(bookings: []),
       ProfileScreen(),
     ];
 

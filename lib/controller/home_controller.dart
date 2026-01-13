@@ -6,7 +6,7 @@ class HomeController {
     VillaModel(
       id: '1',
       title: "Ocean View Villa",
-      price: "₹18,000 / night",
+      price: 18000.00,
       image: "assets/images/villa1.jpg",
       location: "Goa",
       rating: 4.8,
@@ -15,7 +15,7 @@ class HomeController {
     VillaModel(
       id: '2',
       title: "Private Pool Villa",
-      price: "₹25,000 / night",
+      price: 25000,
       image: "assets/images/villa2.jpg",
       location: "Maldives",
       rating: 4.9,
@@ -24,7 +24,7 @@ class HomeController {
     VillaModel(
       id: '3',
       title: "Hilltop Luxury Stay",
-      price: "₹15,500 / night",
+      price: 15500,
       image: "assets/images/villa3.jpg",
       location: "Bali",
       rating: 4.7,
@@ -33,7 +33,7 @@ class HomeController {
     VillaModel(
       id: '4',
       title: "Royal Heritage Villa",
-      price: "₹32,000 / night",
+      price: 32000,
       image: "assets/images/villa5.jpg",
       location: "Dubai",
       rating: 5.0,

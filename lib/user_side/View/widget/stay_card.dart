@@ -4,7 +4,7 @@ import 'favorite_heart.dart';
 
 class StayCard extends StatelessWidget {
   final String title;
-  final String price;
+  final double price;
   final String image;
   final VoidCallback? onTap;
 
@@ -75,7 +75,7 @@ class StayCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      price,
+                      "₹${price.toStringAsFixed(0)} / night",
                       style: const TextStyle(
                         color: AppColors.goldText,
                         fontWeight: FontWeight.w600,

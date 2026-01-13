@@ -59,7 +59,7 @@ class _AddStayScreenState extends State<AddStayScreen> {
     final villa = VillaModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: _titleController.text.trim(),
-      price: _priceController.text.trim(),
+      price: double.tryParse(_priceController.text.trim()) ?? 0,
       location: _locationController.text.trim(),
       type: selectedType,
       image: selectedImage!.path,

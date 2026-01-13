@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:aurum_stay/model/villa_model.dart';
+import 'package:aurum_stay/user_side/View/payment_screen.dart';
 import 'package:aurum_stay/user_side/View/widget/booking_tile.dart';
 import 'package:aurum_stay/user_side/View/widget/counter_button.dart';
 import 'package:aurum_stay/user_side/View/widget/icon_button.dart';
@@ -8,7 +9,7 @@ import '../../controller/booking_controller.dart';
 import '../../utils/app_colors.dart';
 
 class BookingScreen extends StatefulWidget {
-  final VillaModel villa; //
+  final VillaModel villa;
 
   const BookingScreen({super.key, required this.villa});
 
@@ -31,6 +32,7 @@ class _BookingScreenState extends State<BookingScreen> {
       backgroundColor: AppColors.bg,
       body: Stack(
         children: [
+          /// IMAGE
           Hero(
             tag: widget.villa.image,
             child: Image.asset(
@@ -44,6 +46,7 @@ class _BookingScreenState extends State<BookingScreen> {
           SafeArea(
             child: Column(
               children: [
+                /// TOP BAR
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -63,6 +66,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
                 const Spacer(),
 
+                /// BOTTOM SHEET
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(32),
@@ -81,6 +85,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /// TITLE
                             Text(
                               widget.villa.title,
                               style: const TextStyle(
@@ -89,40 +94,18 @@ class _BookingScreenState extends State<BookingScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+
                             const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  color: AppColors.gold,
-                                  size: 18,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  widget.villa.rating.toString(),
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                const SizedBox(width: 12),
-                                const Icon(
-                                  Icons.location_on,
-                                  color: Colors.white54,
-                                  size: 16,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  widget.villa.location,
-                                  style: const TextStyle(color: Colors.white54),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 6),
+
+                            /// PRICE
                             Text(
-                              widget.villa.price,
+                              "₹${widget.villa.price.toStringAsFixed(0)} / night",
                               style: const TextStyle(
                                 color: AppColors.goldText,
                                 fontSize: 16,
                               ),
                             ),
+
                             const SizedBox(height: 24),
 
                             /// DATES
@@ -136,10 +119,11 @@ class _BookingScreenState extends State<BookingScreen> {
                                         : controller.model.checkIn!
                                               .toString()
                                               .split(" ")[0],
-                                    onTap: () =>
-                                        controller.pickDate(context, true, () {
-                                          setState(() {});
-                                        }),
+                                    onTap: () => controller.pickDate(
+                                      context,
+                                      true,
+                                      () => setState(() {}),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 16),
@@ -156,9 +140,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                         : () => controller.pickDate(
                                             context,
                                             false,
-                                            () {
-                                              setState(() {});
-                                            },
+                                            () => setState(() {}),
                                           ),
                                   ),
                                 ),
@@ -186,10 +168,9 @@ class _BookingScreenState extends State<BookingScreen> {
                                     children: [
                                       CounterButton(
                                         icon: Icons.remove,
-                                        onTap: () =>
-                                            controller.decreaseGuests(() {
-                                              setState(() {});
-                                            }),
+                                        onTap: () => controller.decreaseGuests(
+                                          () => setState(() {}),
+                                        ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -205,10 +186,9 @@ class _BookingScreenState extends State<BookingScreen> {
                                       ),
                                       CounterButton(
                                         icon: Icons.add,
-                                        onTap: () =>
-                                            controller.increaseGuests(() {
-                                              setState(() {});
-                                            }),
+                                        onTap: () => controller.increaseGuests(
+                                          () => setState(() {}),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -218,7 +198,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
                             const SizedBox(height: 24),
 
-                            /// Booking Summary
+                            /// SUMMARY
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
@@ -238,7 +218,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                   const SizedBox(height: 12),
                                   _SummaryRow(
                                     left: "Price / night",
-                                    right: widget.villa.price,
+                                    right:
+                                        "₹${widget.villa.price.toStringAsFixed(0)}",
                                   ),
                                   _SummaryRow(
                                     left: "Nights",
@@ -252,7 +233,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   _SummaryRow(
                                     left: "Total",
                                     right:
-                                        "₹${controller.model.totalPrice(widget.villa.price)}",
+                                        "₹${controller.model.totalPrice(widget.villa.price).toStringAsFixed(0)}",
                                     isBold: true,
                                   ),
                                 ],
@@ -268,49 +249,35 @@ class _BookingScreenState extends State<BookingScreen> {
             ),
           ),
 
-          /// Confirm Booking Button
+          /// CONFIRM BUTTON
           Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.55),
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(24),
-                    ),
+            bottom: 16,
+            left: 20,
+            right: 20,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.goldText,
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22),
+                ),
+                elevation: 6,
+              ),
+              onPressed: () {
+                final total = controller.model.totalPrice(widget.villa.price);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PaymentScreen(totalAmount: total),
                   ),
-                  child: SizedBox(
-                    height: 56,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.goldText,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        elevation: 6,
-                      ),
-                      onPressed:
-                          (controller.model.checkIn == null ||
-                              controller.model.checkOut == null)
-                          ? null
-                          : () {
-                              // Navigate to payment or success screen
-                            },
-                      child: const Text(
-                        "Confirm Booking",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                );
+              },
+              child: const Text(
+                "Book Now",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -321,7 +288,7 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 }
 
-/// Booking Summary Row
+/// SUMMARY ROW
 class _SummaryRow extends StatelessWidget {
   final String left;
   final String right;

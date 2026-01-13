@@ -1,11 +1,11 @@
 import 'package:aurum_stay/model/villa_model.dart';
 import 'package:aurum_stay/user_side/View/booking_screen.dart';
+import 'package:aurum_stay/user_side/View/widget/facility_icon.dart';
 import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
 
 class DetailsPage extends StatelessWidget {
-  final VillaModel villa; // <-- change from Map<String,String> to VillaModel
-
+  final VillaModel villa;
   const DetailsPage({super.key, required this.villa});
 
   @override
@@ -14,7 +14,6 @@ class DetailsPage extends StatelessWidget {
       backgroundColor: AppColors.bg,
       body: Stack(
         children: [
-          // Scrollable content with SliverAppBar
           CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -27,7 +26,7 @@ class DetailsPage extends StatelessWidget {
                 ),
                 flexibleSpace: FlexibleSpaceBar(
                   background: Hero(
-                    tag: villa.image, // use villa.image
+                    tag: villa.image,
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
@@ -65,7 +64,7 @@ class DetailsPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        villa.price,
+                        "₹${villa.price.toStringAsFixed(0)} / night",
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -98,16 +97,18 @@ class DetailsPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Wrap(
+                        spacing: 20,
+                        runSpacing: 20,
                         children: const [
-                          _FacilityIcon(icon: Icons.wifi, label: "Wi-Fi"),
-                          _FacilityIcon(icon: Icons.pool, label: "Pool"),
-                          _FacilityIcon(
+                          FacilityChip(icon: Icons.wifi, label: "Wi-Fi"),
+                          FacilityChip(icon: Icons.pool, label: "Pool"),
+                          FacilityChip(
                             icon: Icons.local_parking,
                             label: "Parking",
                           ),
-                          _FacilityIcon(icon: Icons.ac_unit, label: "AC"),
+                          FacilityChip(icon: Icons.ac_unit, label: "AC"),
+                          FacilityChip(icon: Icons.dining, label: "BreakFast"),
                         ],
                       ),
                       const SizedBox(height: 120),
@@ -149,30 +150,6 @@ class DetailsPage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _FacilityIcon extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  const _FacilityIcon({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 22,
-          backgroundColor: Colors.white10,
-          child: Icon(icon, color: Colors.white, size: 22),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white70, fontSize: 12),
-        ),
-      ],
     );
   }
 }
