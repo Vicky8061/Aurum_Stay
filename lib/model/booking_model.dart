@@ -1,12 +1,17 @@
 import 'package:aurum_stay/model/villa_model.dart';
 
 class BookingModel {
-  final VillaModel villa;
+  final VillaModel villa; // required
   DateTime? checkIn;
   DateTime? checkOut;
-  int guests = 1;
+  int guests;
 
-  BookingModel({required this.villa, this.checkIn, this.checkOut});
+  BookingModel({
+    required this.villa,
+    this.checkIn,
+    this.checkOut,
+    this.guests = 1,
+  });
 
   /// Number of nights
   int get nights {
@@ -15,7 +20,7 @@ class BookingModel {
   }
 
   /// Total price calculation
-  double totalPrice(double pricePerNight) {
-    return nights * pricePerNight;
+  double totalPrice(double price) {
+    return nights * villa.price; // price comes from villa
   }
 }

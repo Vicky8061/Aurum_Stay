@@ -1,9 +1,10 @@
+import 'package:aurum_stay/controller/BottomNavController.dart';
+import 'package:aurum_stay/controller/user_booking_controller.dart';
 import 'package:aurum_stay/user_side/View/home_screen.dart';
 import 'package:aurum_stay/user_side/View/mybooking_screen.dart';
 import 'package:aurum_stay/user_side/View/profile_screen.dart';
 import 'package:aurum_stay/user_side/View/saved_screen.dart';
 import 'package:aurum_stay/user_side/View/widget/bottom_nav_bar.dart';
-import 'package:aurum_stay/controller/BottomNavController.dart';
 import 'package:aurum_stay/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,18 +16,27 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navController = Get.put(BottomNavController());
-
-    final List<Widget> screens = const [
-      HomeScreen(),
-      SavedScreen(),
-      MyBookingsScreen(bookings: []),
-      ProfileScreen(),
-    ];
+    final bookingsController = Get.put(UserBookingsController());
 
     return Scaffold(
       backgroundColor: AppColors.bg,
 
-      body: Obx(() => screens[navController.currentIndex.value]),
+      body: Obx(() {
+        switch (navController.currentIndex.value) {
+          case 0:
+            return const HomeScreen();
+          case 1:
+            return const SavedScreen();
+          case 2:
+            return MyBookingsScreen(
+              bookings: bookingsController.bookings,
+            ); // ✅ reactive list passed here
+          case 3:
+            return const ProfileScreen();
+          default:
+            return const HomeScreen();
+        }
+      }),
 
       bottomNavigationBar: Obx(() => _buildBottomNav(navController)),
     );

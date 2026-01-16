@@ -1,6 +1,8 @@
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
 import '../model/villa_model.dart';
 
-class HomeController {
+class HomeController extends GetxController {
   /// List of dummy villas
   List<VillaModel> villas = [
     VillaModel(

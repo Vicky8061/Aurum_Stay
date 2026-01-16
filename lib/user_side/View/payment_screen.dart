@@ -1,11 +1,20 @@
-import 'package:aurum_stay/controller/booking_controller.dart';
+import 'package:aurum_stay/controller/BottomNavController.dart';
+import 'package:aurum_stay/controller/user_booking_controller.dart';
+import 'package:aurum_stay/model/booking_model.dart';
 import 'package:aurum_stay/user_side/View/widget/payment_option.dart';
 import 'package:aurum_stay/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PaymentScreen extends StatefulWidget {
   final double totalAmount;
-  const PaymentScreen({super.key, required this.totalAmount});
+  final BookingModel booking;
+
+  const PaymentScreen({
+    super.key,
+    required this.totalAmount,
+    required this.booking,
+  });
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -13,12 +22,16 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   String selectedMethod = "upi";
-  late BookingController controller;
+
+  // Safe GetX controller fetch
+  late final UserBookingsController bookingsController;
 
   @override
   void initState() {
     super.initState();
-    controller = BookingController();
+    bookingsController = Get.isRegistered<UserBookingsController>()
+        ? Get.find<UserBookingsController>()
+        : Get.put(UserBookingsController());
   }
 
   @override
@@ -51,7 +64,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.white70),
                   ),
                   Text(
-                    "₹${widget.totalAmount}",
+                    "₹${widget.totalAmount.toStringAsFixed(0)}",
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -86,31 +99,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
               icon: Icons.qr_code,
               title: "UPI",
               subtitle: "Google Pay, PhonePe, Paytm",
-              onChanged: (value) {
-                setState(() => selectedMethod = value);
-              },
+              onChanged: (value) => setState(() => selectedMethod = value),
             ),
-
             PaymentOption(
               value: "card",
               groupValue: selectedMethod,
               icon: Icons.credit_card,
               title: "Debit / Credit Card",
               subtitle: "Visa, MasterCard",
-              onChanged: (value) {
-                setState(() => selectedMethod = value);
-              },
+              onChanged: (value) => setState(() => selectedMethod = value),
             ),
-
             PaymentOption(
               value: "wallet",
               groupValue: selectedMethod,
               icon: Icons.account_balance_wallet,
               title: "Wallet",
               subtitle: "Paytm, Amazon Pay",
-              onChanged: (value) {
-                setState(() => selectedMethod = value);
-              },
+              onChanged: (value) => setState(() => selectedMethod = value),
             ),
 
             const Spacer(),
@@ -120,7 +125,26 @@ class _PaymentScreenState extends State<PaymentScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: Payment logic
+                  // 1️⃣ Add booking to global list
+                  bookingsController.addBooking(widget.booking);
+
+                  // 2️⃣ Switch to My Bookings tab
+                  if (Get.isRegistered<BottomNavController>()) {
+                    final navController = Get.find<BottomNavController>();
+                    navController.changeTab(2);
+                  }
+
+                  // 3️⃣ Show success snackbar
+                  Get.snackbar(
+                    "Payment Successful",
+                    "Your stay has been booked!",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.green.shade600,
+                    colorText: Colors.white,
+                  );
+
+                  // 4️⃣ Return to main screen
+                  Get.until((route) => route.isFirst);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.goldText,

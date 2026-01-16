@@ -23,7 +23,7 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     super.initState();
-    controller = BookingController();
+    controller = BookingController(villa: widget.villa);
   }
 
   @override
@@ -250,36 +250,65 @@ class _BookingScreenState extends State<BookingScreen> {
           ),
 
           /// CONFIRM BUTTON
+          /// SMART CONFIRM BUTTON
           Positioned(
             bottom: 16,
             left: 20,
             right: 20,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.goldText,
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22),
-                ),
-                elevation: 6,
-              ),
-              onPressed: () {
-                final total = controller.model.totalPrice(widget.villa.price);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PaymentScreen(totalAmount: total),
+            child: Builder(
+              builder: (context) {
+                final isValid =
+                    controller.model.checkIn != null &&
+                    controller.model.checkOut != null &&
+                    controller.model.nights > 0;
+
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: isValid
+                        ? AppColors.goldText
+                        : Colors.grey.shade700,
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                    elevation: isValid ? 6 : 0,
+                  ),
+                  onPressed: isValid
+                      ? () {
+                          final total = controller.model.totalPrice(
+                            widget.villa.price,
+                          );
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PaymentScreen(
+                                totalAmount: total,
+                                booking: controller.model,
+                              ),
+                            ),
+                          );
+                        }
+                      : () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Please select valid Check-in & Check-out dates",
+                              ),
+                              backgroundColor: Colors.redAccent,
+                            ),
+                          );
+                        },
+                  child: Text(
+                    isValid ? "Book Now" : "Select Dates to Continue",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 );
               },
-              child: const Text(
-                "Book Now",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             ),
           ),
         ],

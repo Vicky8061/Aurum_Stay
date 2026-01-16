@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../model/booking_model.dart';
+import '../model/villa_model.dart';
 
-class BookingController {
-  final BookingModel model = BookingModel();
+class BookingController extends GetxController {
+  final BookingModel model;
 
-  /// Date Picker (your exact logic)
+  // Require villa in constructor
+  BookingController({required VillaModel villa})
+    : model = BookingModel(villa: villa);
+
+  /// Date Picker
   Future<void> pickDate(
     BuildContext context,
     bool isCheckIn,
@@ -13,21 +19,12 @@ class BookingController {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
-    DateTime firstDate;
-    DateTime initialDate;
+    if (!isCheckIn && model.checkIn == null) return; // prevent crash
 
-    if (isCheckIn) {
-      firstDate = today;
-      initialDate = today;
-    } else {
-      final checkInDate = DateTime(
-        model.checkIn!.year,
-        model.checkIn!.month,
-        model.checkIn!.day,
-      );
-      firstDate = checkInDate.add(const Duration(days: 1));
-      initialDate = firstDate;
-    }
+    DateTime firstDate = isCheckIn
+        ? today
+        : model.checkIn!.add(const Duration(days: 1));
+    DateTime initialDate = firstDate;
 
     final picked = await showDatePicker(
       context: context,
